@@ -1,0 +1,437 @@
+<Ui>
+	<Script file="SummonsMonitor.lua"/>
+
+   	<Frame name="SummonsMonitor_BaseWidget">
+	  	<Scripts>
+			<OnLoad>
+				 SummonsMonitor_OnLoad();
+				 this:RegisterEvent("CHAT_MSG_RAID");
+				 this:RegisterEvent("CHAT_MSG_RAID_LEADER");
+				 this:RegisterEvent("CHAT_MSG_PARTY");
+                                 this:RegisterEvent("SPELLCAST_START");
+                                 this:RegisterEvent("CHAT_MSG_WHISPER");
+
+--                                 this:RegisterEvent("ACTIONBAR_UPDATE_COOLDOWN");
+			</OnLoad>
+			<OnEvent>
+				 SummonsMonitor_OnEvent(event, arg1, arg2);
+			</OnEvent>
+		</Scripts>
+	</Frame>
+
+	<Button name="SummonsMonitor_EntryTemplate" virtual="true" text="lol">
+  		<Size>
+                	<AbsDimension x="300" y="20"/>
+                </Size>
+		<Anchors>
+			<Anchor point="TOPLEFT">
+				<Offset>
+					<AbsDimension x="30" y="-85"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Scripts>
+			<OnClick>
+				SummonsMonitor_EntryClicked(this:GetText());
+			</OnClick>
+		</Scripts>
+		<Layers>
+			<Layer level="HIGHLIGHT">
+				<Texture>
+                                	<Color r="1" g="1" b="0" a="0.15"/>
+ 					<Anchor point="TOPLEFT"/>
+     					<Anchor point="BOTTOMRIGHT"/>
+				</Texture>
+			</Layer>
+			<Layer level="ARTWORK">
+         			<FontString name = "$parent_NameString" inherits="GameFontNormal" text="NameString">
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset>
+								<AbsDimension x="10" y="-4"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+         			<FontString name = "$parent_StatusString" inherits="GameFontNormal" text="StatusString">
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset>
+								<AbsDimension x="170" y="-4"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+	</Button>
+
+	<Frame name="SummonsMonitor_MainWindow" toplevel="true" parent="UIParent" hidden="true">
+		<Size>
+			<AbsDimension x="384" y="512"/>
+		</Size>
+		<Anchors>
+			<Anchor point="TOPLEFT">
+				<Offset>
+					<AbsDimension x="0" y="-104"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<HitRectInsets>
+			<AbsInset left="0" right="30" top="0" bottom="45"/>
+		</HitRectInsets>
+
+
+		<Layers>
+			<Layer level="ARTWORK">
+
+				<!-- Icon in the upper left corner of a parchment scroll. <>  NEED TO CHANGE ICON --> 
+				<Texture file="Interface\FriendsFrame\FriendsFrameScrollIcon">
+					<Size>
+						<AbsDimension x="60" y="60"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset>
+								<AbsDimension x="7" y="-6"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+
+				<FontString name = "$parent_Title" inherits="GameFontHighlight">
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="-18"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+
+
+				<!-- These next four blocks make the background texture for the window. --> 
+				<Texture name="$parentTopLeft" file="Interface\PaperDollInfoFrame\UI-Character-General-TopLeft">
+					<Size>
+						<AbsDimension x="256" y="256"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT"/>
+					</Anchors>
+				</Texture>
+				<Texture name="$parentTopRight" file="Interface\PaperDollInfoFrame\UI-Character-General-TopRight">
+					<Size>
+						<AbsDimension x="128" y="256"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPRIGHT"/>
+					</Anchors>
+				</Texture>
+				<Texture name="$parentBottomLeft" file="Interface\PaperDollInfoFrame/UI-Character-General-BottomLeft">
+					<Size>
+						<AbsDimension x="256" y="256"/>
+					</Size>
+					<Anchors>
+						<Anchor point="BOTTOMLEFT"/>
+					</Anchors>
+				</Texture>
+				<Texture name="$parentBottomRight" file="Interface\PaperDollInfoFrame/UI-Character-General-BottomRight">
+					<Size>
+						<AbsDimension x="128" y="256"/>
+					</Size>
+					<Anchors>
+						<Anchor point="BOTTOMRIGHT"/>
+					</Anchors>
+				</Texture>
+
+			</Layer>
+		</Layers>
+		<Frames>
+			<Button name="$parent_CloseButton" inherits="UIPanelCloseButton">
+				<Anchors>
+					<Anchor point="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="-30" y="-8"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						SummonsMonitor_MainWindow_Hide(); 
+					</OnClick>
+				</Scripts>
+			</Button>
+
+
+			<Button name="$parent_DoSummon" inherits="GameMenuButtonTemplate" text="Summon Target">
+				<Size>
+					<AbsDimension x="130" y="22"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="-45" y="-45"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND">
+						<FontString name="$parent_Text" inherits="GameTooltipTextSmall" text="Summon Target">
+							<Anchors>
+								<Anchor point="CENTER">
+									<Offset>
+										<AbsDimension x="0" y="1"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+                                                SummonsMonitor_SummonTarget();
+					</OnClick>
+				</Scripts>
+			</Button>
+
+
+
+			<Button name="$parent_DoNext" inherits="GameMenuButtonTemplate" text="Summon Next">
+				<Size>
+					<AbsDimension x="130" y="22"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="-180" y="-45"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND">
+						<FontString name="$parent_Text" inherits="GameTooltipTextSmall" text="Summon Next">
+							<Anchors>
+								<Anchor point="CENTER">
+									<Offset>
+										<AbsDimension x="0" y="1"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+                                                SummonsMonitor_SummonNext()
+					</OnClick>
+				</Scripts>
+			</Button>
+
+
+
+
+			<Button name="SummonsMonitor_Headding">
+  		                <Size>
+                                	<AbsDimension x="300" y="20"/>
+                                </Size>
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="30" y="-80"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+		                <Layers>
+	                		<Layer level="ARTWORK">
+					       <texture>
+                                                	<Color r="1" g="1" b="1" a="1"/>
+							<Size>
+								<AbsDimension x="300" y="1"/>
+							</Size>
+							<Anchors>
+								<Anchor point="BOTTOMLEFT">
+									<Offset>
+										<AbsDimension x="0" y="-3"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+					       </texture>
+
+						<FontString name = "$parent_NameString" inherits="GameFontHighlight" text="Player Name">
+							<Anchors>
+								<Anchor point="TOPLEFT">
+									<Offset>
+										<AbsDimension x="10" y="-4"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name = "$parent_StatusString" inherits="GameFontHighlight" text="Status">
+							<Anchors>
+								<Anchor point="TOPLEFT">
+									<Offset>
+										<AbsDimension x="170" y="-4"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+		                </Layers>
+			</Button>
+
+
+
+
+			<Button name="SummonsMonitor_Entry1" inherits="SummonsMonitor_EntryTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="30" y="-105"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="SummonsMonitor_Entry2" inherits="SummonsMonitor_EntryTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="30" y="-125"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="SummonsMonitor_Entry3" inherits="SummonsMonitor_EntryTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="30" y="-145"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="SummonsMonitor_Entry4" inherits="SummonsMonitor_EntryTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="30" y="-165"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="SummonsMonitor_Entry5" inherits="SummonsMonitor_EntryTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="30" y="-185"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="SummonsMonitor_Entry6" inherits="SummonsMonitor_EntryTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="30" y="-205"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="SummonsMonitor_Entry7" inherits="SummonsMonitor_EntryTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="30" y="-225"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="SummonsMonitor_Entry8" inherits="SummonsMonitor_EntryTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="30" y="-245"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="SummonsMonitor_Entry9" inherits="SummonsMonitor_EntryTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="30" y="-265"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="SummonsMonitor_Entry10" inherits="SummonsMonitor_EntryTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="30" y="-285"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="SummonsMonitor_Entry11" inherits="SummonsMonitor_EntryTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="30" y="-305"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="SummonsMonitor_Entry12" inherits="SummonsMonitor_EntryTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="30" y="-325"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="SummonsMonitor_Entry13" inherits="SummonsMonitor_EntryTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="30" y="-345"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="SummonsMonitor_Entry14" inherits="SummonsMonitor_EntryTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="30" y="-365"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="SummonsMonitor_Entry15" inherits="SummonsMonitor_EntryTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="30" y="-385"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="SummonsMonitor_Entry16" inherits="SummonsMonitor_EntryTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="30" y="-405"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+
+
+		</Frames>
+	</Frame>
+
+
+
+
+</Ui>

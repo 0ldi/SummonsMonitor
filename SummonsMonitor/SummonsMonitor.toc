@@ -1,0 +1,9 @@
+## Interface: 11100
+## Title: Summons Monitor -- by Zayla
+## Version: 0.3
+## Author: Zayla
+## DefaultState: Enabled
+## LoadOnDemand: 0
+## Notes: Makes it easy for one or more warlocks to coordinate summons of multiple people.
+## SavedVariables: SummonsMonitor_Messages
+SummonsMonitor.xml

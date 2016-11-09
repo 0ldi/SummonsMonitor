@@ -1,0 +1,8 @@
+<Bindings>
+        <Binding name="SUMMONSMONITOR_TOGGLEWINDOW" description="Opens and closes the Summons Monitor status window"  header="SUMMONSMONITORHEADER">
+                SummonsMonitor_MainWindow_ToggleVisible()
+        </Binding>
+        <Binding name="SUMMONSMONITOR_SUMMONNEXT" description="Summons the next person in the queue"  header="SUMMONSMONITORHEADER">
+                SummonsMonitor_SummonNext()
+        </Binding>
+</Bindings>
