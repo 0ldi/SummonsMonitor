@@ -7,9 +7,9 @@
 -- Saved Stuff goes here
 
 SummonsMonitor_Messages = {}
-SummonsMonitor_Messages.announceSummon = "I am summoning %t.  Please click the portal.";
-SummonsMonitor_Messages.announceSoulst = nil;  -- "I am saving %t's soul in a soulstone.";
-
+SummonsMonitor_Messages.announceSummon = " <%t> under summoning! ASSIST ME"; --"I am summoning %t.  Please click the portal.";
+SummonsMonitor_Messages.announceSoulst = " <%t> under soulstoning!"; --"I am saving %t's soul in a soulstone.";
+--need help to add this (not working): ..GetMinimapZoneText()..
 -- ===============================================================================
 
 SummonsMonitor_CoolOffTime         =  20;   -- Seconds
@@ -348,9 +348,17 @@ function SummonsMonitor_IsSummonsRequest(lmsg, lspeaker)
 
   if ((lmsg == "summon") or
       (lmsg == "sumon") or
+	  string.find(lmsg,"сумон" ) or
+	  string.find(lmsg,"суман" ) or
+	  string.find(lmsg,"суммон" ) or
+	  string.find(lmsg,"сумман" ) or
+	  string.find(lmsg,"самон" ) or
+	  string.find(lmsg,"саман" ) or
+	  string.find(lmsg,"саммон" ) or
+	  string.find(lmsg,"самман" ) or
       string.find(lmsg,"summon me" ) or
       string.find(lmsg,"summonme"  ) or
-      string.find(lmsg,"sumon me"  ) or
+      string.find(lmsg,"sumon"  ) or
       string.find(lmsg,"summone me") or
       string.find(lmsg,"summon pls") or
       string.find(lmsg,"summon plz") or

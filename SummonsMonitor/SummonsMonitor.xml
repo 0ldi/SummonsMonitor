@@ -163,9 +163,9 @@
 			</Button>
 
 
-			<Button name="$parent_DoSummon" inherits="GameMenuButtonTemplate" text="Summon Target">
+			<Button name="$parent_DoSummon" inherits="GameMenuButtonTemplate" text="Target">
 				<Size>
-					<AbsDimension x="130" y="22"/>
+					<AbsDimension x="75" y="22"/>
 				</Size>
 				<Anchors>
 					<Anchor point="TOPRIGHT">
@@ -176,7 +176,7 @@
 				</Anchors>
 				<Layers>
 					<Layer level="BACKGROUND">
-						<FontString name="$parent_Text" inherits="GameTooltipTextSmall" text="Summon Target">
+						<FontString name="$parent_Text" inherits="GameTooltipTextSmall" text="Target">
 							<Anchors>
 								<Anchor point="CENTER">
 									<Offset>
@@ -196,20 +196,20 @@
 
 
 
-			<Button name="$parent_DoNext" inherits="GameMenuButtonTemplate" text="Summon Next">
+			<Button name="$parent_DoNext" inherits="GameMenuButtonTemplate" text="Next">
 				<Size>
-					<AbsDimension x="130" y="22"/>
+					<AbsDimension x="75" y="22"/>
 				</Size>
 				<Anchors>
 					<Anchor point="TOPRIGHT">
 						<Offset>
-							<AbsDimension x="-180" y="-45"/>
+							<AbsDimension x="-120" y="-45"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
 				<Layers>
 					<Layer level="BACKGROUND">
-						<FontString name="$parent_Text" inherits="GameTooltipTextSmall" text="Summon Next">
+						<FontString name="$parent_Text" inherits="GameTooltipTextSmall" text="Next">
 							<Anchors>
 								<Anchor point="CENTER">
 									<Offset>
@@ -228,8 +228,40 @@
 			</Button>
 
 
+		
+			<Button name="$parent_DoNext" inherits="GameMenuButtonTemplate" text="Clear">
+				<Size>
+					<AbsDimension x="75" y="22"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="-225" y="-45"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND">
+						<FontString name="$parent_Text" inherits="GameTooltipTextSmall" text="Clear">
+							<Anchors>
+								<Anchor point="CENTER">
+									<Offset>
+										<AbsDimension x="0" y="1"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+                                                SummonsMonitor_ClearList()
+					</OnClick>
+				</Scripts>
+			</Button>
 
-
+			
+			
 			<Button name="SummonsMonitor_Headding">
   		                <Size>
                                 	<AbsDimension x="300" y="20"/>
