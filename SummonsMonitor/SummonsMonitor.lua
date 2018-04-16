@@ -599,7 +599,7 @@ function SummonsMonitor_EntryClicked(name)
   TargetByName(name, true);  
 end
 
-function SummonsMonitor_EntryHover(name) --mz
+function SummonsMonitor_EntryHover(name)
 	local tar = UnitName("target") or ""
 	GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
 	TargetByName(name)
@@ -612,7 +612,7 @@ function SummonsMonitor_EntryHover(name) --mz
 	end
 end
 
-function SummonsMonitor_RemoveEntry(entry) --mz
+function SummonsMonitor_RemoveEntry(entry)
 	SummonsList[entry]=nil
 	SortedSummonsNameList[entry]=nil
 	SummonsMonitor_UpdateUIList()
