@@ -1,6 +1,6 @@
 ## Interface: 11100
 ## Title: Summons Monitor -- by Zayla
-## Version: 0.3
+## Version: 0.4
 ## Author: Zayla
 ## DefaultState: Enabled
 ## LoadOnDemand: 0
