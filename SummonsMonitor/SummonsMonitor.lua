@@ -599,6 +599,25 @@ function SummonsMonitor_EntryClicked(name)
   TargetByName(name, true);  
 end
 
+function SummonsMonitor_EntryHover(name) --mz
+	local tar = UnitName("target") or ""
+	GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+	TargetByName(name)
+	GameTooltip:SetUnit("target")
+	GameTooltip:Show()
+	if tar == "" then 
+		ClearTarget()
+	else
+		TargetByName(tar)
+	end
+end
+
+function SummonsMonitor_RemoveEntry(entry) --mz
+	SummonsList[entry]=nil
+	SortedSummonsNameList[entry]=nil
+	SummonsMonitor_UpdateUIList()
+end
+
 -- ===============================================================================
 
 function SummonsMonitor_BuildWidgetList()
