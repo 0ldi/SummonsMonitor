@@ -31,9 +31,19 @@
 			</Anchor>
 		</Anchors>
 		<Scripts>
+			<OnLoad>
+				this:RegisterForClicks("RightButtonUp", "LeftButtonUp")
+			</OnLoad>
 			<OnClick>
-				SummonsMonitor_EntryClicked(this:GetText());
+				if ( arg1 == "RightButton" ) then
+					SummonsMonitor_RemoveEntry(this:GetText())
+				else
+					SummonsMonitor_EntryClicked(this:GetText());
+				end
 			</OnClick>
+			<OnEnter>
+				SummonsMonitor_EntryHover(this:GetText())
+			</OnEnter>
 		</Scripts>
 		<Layers>
 			<Layer level="HIGHLIGHT">
