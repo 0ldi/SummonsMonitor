@@ -8,7 +8,7 @@
 
 SummonsMonitor_Messages = {}
 SummonsMonitor_Messages.announceSummon = " <%t> under summoning! ASSIST ME"; --"I am summoning %t.  Please click the portal.";
-SummonsMonitor_Messages.announceSoulst = " <%t> under soulstoning!"; --"I am saving %t's soul in a soulstone.";
+SummonsMonitor_Messages.announceSoulst = " my soulstone on <%t>"; --"I am saving %t's soul in a soulstone.";
 --need help to add this (not working): ..GetMinimapZoneText()..
 -- ===============================================================================
 
@@ -338,6 +338,7 @@ function SummonsMonitor_EnterRequest(target, wasTell)
   SummonsList[name].status  = status;
   SummonsList[name].warlock = warlock;
   SummonsList[name].time    = time;
+  SummonsList[name].unitID  = unitID;
 
   SummonsMonitor_UpdateUIList(); 
 end
@@ -348,14 +349,7 @@ function SummonsMonitor_IsSummonsRequest(lmsg, lspeaker)
 
   if ((lmsg == "summon") or
       (lmsg == "sumon") or
-	  string.find(lmsg,"сумон" ) or
-	  string.find(lmsg,"суман" ) or
-	  string.find(lmsg,"суммон" ) or
-	  string.find(lmsg,"сумман" ) or
-	  string.find(lmsg,"самон" ) or
-	  string.find(lmsg,"саман" ) or
-	  string.find(lmsg,"саммон" ) or
-	  string.find(lmsg,"самман" ) or
+	  string.find(lmsg,"123" ) or
       string.find(lmsg,"summon me" ) or
       string.find(lmsg,"summonme"  ) or
       string.find(lmsg,"sumon"  ) or
@@ -388,6 +382,7 @@ end
 function SummonsMonitor_IsSummonsNotice(lmsg, lspeaker) 
 
   if (string.find(lmsg,"summoning") or
+	  string.find(lmsg,"<>") or
       (string.find(lmsg,"summon") and string.find(lmsg,"click")) or
       (string.find(lmsg,"portal") and string.find(lmsg,"click"))) then
     local t,n;
@@ -602,14 +597,8 @@ end
 function SummonsMonitor_EntryHover(name)
 	local tar = UnitName("target") or ""
 	GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-	TargetByName(name)
-	GameTooltip:SetUnit("target")
+	GameTooltip:SetUnit(SummonsList[name].unitID)
 	GameTooltip:Show()
-	if tar == "" then 
-		ClearTarget()
-	else
-		TargetByName(tar)
-	end
 end
 
 function SummonsMonitor_RemoveEntry(entry)
