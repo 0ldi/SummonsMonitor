@@ -338,6 +338,7 @@ function SummonsMonitor_EnterRequest(target, wasTell)
   SummonsList[name].status  = status;
   SummonsList[name].warlock = warlock;
   SummonsList[name].time    = time;
+  SummonsList[name].unitID  = unitID;
 
   SummonsMonitor_UpdateUIList(); 
 end
@@ -346,7 +347,7 @@ end
 
 function SummonsMonitor_IsSummonsRequest(lmsg, lspeaker) 
 
-  if ((lmsg == "summon") or
+   if ((lmsg == "summon") or
       (lmsg == "sumon") or
 	  string.find(lmsg,"сумон" ) or
 	  string.find(lmsg,"суман" ) or
@@ -365,7 +366,7 @@ function SummonsMonitor_IsSummonsRequest(lmsg, lspeaker)
       string.find(lmsg,"wtb summon") or
       string.find(lmsg,"summon please")) then
     return lspeaker;
-  end
+end
 
   if (string.find(lmsg,"summon") and
       (not string.find(lmsg,"summoning")) and
@@ -388,6 +389,7 @@ end
 function SummonsMonitor_IsSummonsNotice(lmsg, lspeaker) 
 
   if (string.find(lmsg,"summoning") or
+	  string.find(lmsg,"<>") or
       (string.find(lmsg,"summon") and string.find(lmsg,"click")) or
       (string.find(lmsg,"portal") and string.find(lmsg,"click"))) then
     local t,n;
@@ -597,6 +599,19 @@ end
 
 function SummonsMonitor_EntryClicked(name) 
   TargetByName(name, true);  
+end
+
+function SummonsMonitor_EntryHover(name)
+	local tar = UnitName("target") or ""
+	GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+	GameTooltip:SetUnit(SummonsList[name].unitID)
+	GameTooltip:Show()
+end
+
+function SummonsMonitor_RemoveEntry(entry)
+	SummonsList[entry]=nil
+	SortedSummonsNameList[entry]=nil
+	SummonsMonitor_UpdateUIList()
 end
 
 -- ===============================================================================
