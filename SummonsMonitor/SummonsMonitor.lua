@@ -8,7 +8,7 @@
 
 SummonsMonitor_Messages = {}
 SummonsMonitor_Messages.announceSummon = " <%t> under summoning! ASSIST ME"; --"I am summoning %t.  Please click the portal.";
-SummonsMonitor_Messages.announceSoulst = " my soulstone on <%t>"; --"I am saving %t's soul in a soulstone.";
+SummonsMonitor_Messages.announceSoulst = " <%t> under soulstoning!"; --"I am saving %t's soul in a soulstone.";
 --need help to add this (not working): ..GetMinimapZoneText()..
 -- ===============================================================================
 
@@ -347,9 +347,16 @@ end
 
 function SummonsMonitor_IsSummonsRequest(lmsg, lspeaker) 
 
-  if ((lmsg == "summon") or
+   if ((lmsg == "summon") or
       (lmsg == "sumon") or
-	  string.find(lmsg,"123" ) or
+	  string.find(lmsg,"сумон" ) or
+	  string.find(lmsg,"суман" ) or
+	  string.find(lmsg,"суммон" ) or
+	  string.find(lmsg,"сумман" ) or
+	  string.find(lmsg,"самон" ) or
+	  string.find(lmsg,"саман" ) or
+	  string.find(lmsg,"саммон" ) or
+	  string.find(lmsg,"самман" ) or
       string.find(lmsg,"summon me" ) or
       string.find(lmsg,"summonme"  ) or
       string.find(lmsg,"sumon"  ) or
@@ -359,7 +366,7 @@ function SummonsMonitor_IsSummonsRequest(lmsg, lspeaker)
       string.find(lmsg,"wtb summon") or
       string.find(lmsg,"summon please")) then
     return lspeaker;
-  end
+end
 
   if (string.find(lmsg,"summon") and
       (not string.find(lmsg,"summoning")) and
